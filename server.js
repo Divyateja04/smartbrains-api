@@ -9,6 +9,7 @@ const register = require('./controllers/register');
 const signin = require('./controllers/signin');
 const profile = require('./controllers/profile');
 const image = require('./controllers/image');
+const morgan = require('morgan');
 
 const PORT = process.env.PORT || 3000;
 
@@ -24,6 +25,9 @@ const db = knex({
 
 const app = express();
 
+// console.log(process.env)
+
+app.use(morgan('combined'))
 app.use(express.json());
 app.use(cors());
 
