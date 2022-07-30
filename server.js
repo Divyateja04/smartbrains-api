@@ -17,9 +17,10 @@ const db = knex({
     client: 'pg',
     connection: {
       connectionString : process.env.DATABASE_URL,
-      ssl: {
-        rejectUnauthorized: false
-      },
+      ssl: false
+      // {
+      //   rejectUnauthorized: false
+      // },
     }
   });
 
@@ -40,6 +41,8 @@ app.post('/signin', signin.handleSignin(db, bcrypt));
 app.post('/register', register.handleRegister(db, bcrypt));
 
 app.get('/profile/:id', profile.handleProfile(db))
+
+app.post('/profile/:id', profile.handleProfileUpdate(db))
 
 app.put('/image', image.handleImage(db))
 
