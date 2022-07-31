@@ -36,7 +36,7 @@ app.get('/', (req, res)=>{
    res.send("Success");
 })
 
-app.post('/signin', signin.handleSignin(db, bcrypt));
+app.post('/signin', signin.handleSignInAuth(db, bcrypt));
 
 app.post('/register', register.handleRegister(db, bcrypt));
 
