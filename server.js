@@ -9,6 +9,7 @@ const register = require('./controllers/register');
 const signin = require('./controllers/signin');
 const profile = require('./controllers/profile');
 const image = require('./controllers/image');
+const auth = require('./controllers/auth');
 const morgan = require('morgan');
 
 const PORT = process.env.PORT || 3000;
@@ -40,16 +41,16 @@ app.post('/signin', signin.handleSignInAuth(db, bcrypt));
 
 app.post('/register', register.handleRegister(db, bcrypt));
 
-app.get('/profile/:id', profile.handleProfile(db))
+app.get('/profile/:id', auth.requireAuth,  profile.handleProfile(db))
 
-app.post('/profile/:id', profile.handleProfileUpdate(db))
+app.post('/profile/:id', auth.requireAuth, profile.handleProfileUpdate(db))
 
-app.put('/image', image.handleImage(db))
+app.put('/image', auth.requireAuth, image.handleImage(db))
 
-app.post('/imageurl', (req, res) => {image.handleApiCall(req, res)})
+app.post('/imageurl', auth.requireAuth, (req, res) => {image.handleApiCall(req, res)})
 
 app.listen(PORT, ()=>{
-    console.log(`app is running on port ${PORT}`);
+    console.log(`App is running on port ${PORT}`);
 });
 
 /*

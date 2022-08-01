@@ -8,8 +8,10 @@ services:
     working_dir: /usr/src/smartbrain-api
     environment:
       - DATABASE_URL=postgres://postgres:postgres@postgres:5432/smartbrain
+      - REDIS_URL=redis://redis:6379
     links:
       - postgres
+      - redis
     ports:
       - "3000:3000"
     volumes:
@@ -24,3 +26,10 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=smartbrain
       - POSTGRES_HOST=postgres
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
